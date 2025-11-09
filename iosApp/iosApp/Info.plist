@@ -4,5 +4,9 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	
+	<!-- Auth0 client id injected via xcconfig (untracked Secrets.xcconfig) -->
+	<key>AUTH0_CLIENT_ID</key>
+	<string>$(AUTH0_CLIENT_ID)</string>
 </dict>
 </plist>

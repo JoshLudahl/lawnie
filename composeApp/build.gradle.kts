@@ -1,6 +1,7 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -83,6 +84,15 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+
+        // Inject Auth0 client id from untracked root local.properties
+        val localProps = Properties()
+        val localPropsFile = rootProject.file("local.properties")
+        if (localPropsFile.exists()) {
+            FileInputStream(localPropsFile).use { localProps.load(it) }
+        }
+        val auth0ClientId = (localProps.getProperty("client.id") ?: "")
+        buildConfigField("String", "AUTH0_CLIENT_ID", "\"$auth0ClientId\"")
     }
     packaging {
         resources {
@@ -93,6 +103,9 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    buildFeatures {
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -1,3 +1,5 @@
+#include? "Secrets.xcconfig"
+
 TEAM_ID=
 
 PRODUCT_NAME=Lawnie
@@ -5,3 +7,6 @@ PRODUCT_BUNDLE_IDENTIFIER=com.softklass.lawnie.Lawnie$(TEAM_ID)
 
 CURRENT_PROJECT_VERSION=1
 MARKETING_VERSION=1.0
+
+// Default empty to avoid build errors if Secrets.xcconfig is missing
+AUTH0_CLIENT_ID=
